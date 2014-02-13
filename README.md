@@ -6,10 +6,16 @@ This is a small web-based scrumboard. It includes a html file which make ajax re
 This applications has only some minimal functions and is still in beta but you can try it anyway. 
 
 ## Support
-If you come across any bugs in CupcackeCMS don't hesitate to tell us: [Create an Issue](https://github.com/chefe/scrum-board/issues/new)
+If you come across any bugs in scrumboard don't hesitate to tell us: [Create an Issue](https://github.com/chefe/scrum-board/issues/new)
 
 ## License
 [See license file.](https://github.com/chefe/scrum-board/blob/master/LICENSE)
+
+## Setup
+1. Install a webserver and a mysql server
+2. Create the database *scrumboard* and set it up with the given sql script
+3. copy all file to the webroot of your webserver
+4. Have fun!
 
 ## Credits
 * [SlimFramework](http://www.slimframework.com/) which is a really nice php framework to create restful apis
