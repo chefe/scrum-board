@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <!-- Meta-Informations -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Title -->
+    <title>Scrum-Board</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/scrumboard.min.css">
+
+    <style>
+      ul.list-group div.icon-toolbar {
+        /*margin-top: -10px;
+        margin-bottom: -10px;*/
+        margin-right: -15px;
+      }
+
+      ul.list-group div.icon-toolbar > a 
+      {
+        border-left: 1px solid #DDDDDD;
+        padding: 13px;
+      }
+    </style>
+
+  </head>
+  <body>
+
+
+    <!-- Main-Container -->
+    <div id="container" class="container">
+
+      <!-- Site-Header -->
+      <section>
+        <div class="row-fullWidth">
+          <div class="page-header">
+            <h1>Scrum-Board
+              <div class="pull-right">
+                <div class="btn-group">
+                  <a class="btn btn-lg btn-default" href="#/Teams" title="Home"><i class="glyphicon glyphicon-home"></i> Home</a>
+                  <a class="btn btn-lg btn-default" href="javascript:toggleFullscreen()" title="Toggle Fullscreen"><i class="glyphicon glyphicon-fullscreen"></i></a>
+                </div>
+              </div>
+            </h1>
+          </div>
+        </div>
+      </section>
+      
+      <section id="loadingView">
+        <div class="row-fullWidth">
+          <div id="loadingAnimation">
+            <div id="loadingAnimation_1" class="loadingAnimation"></div>
+            <div id="loadingAnimation_2" class="loadingAnimation"></div>
+            <div id="loadingAnimation_3" class="loadingAnimation"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="teamView" class="hidden">
+        <div id="teamViewPlaceholder"class="row-fullWidth"></div>
+      </section>
+
+      <section id="sprintView" class="hidden">
+        <div id="sprintViewPlaceholder"class="row-fullWidth"></div>
+      </section>
+
+      <section id="boardView" class="hidden">
+        <div id="boardViewPlaceholder" class="row-fullWidth"></div>
+      </section>
+
+    </div>
+
+    <!-- Add-Story-Dialog -->
+    <div class="modal fade" id="addStoryModalDialog" tabindex="-1" role="dialog" aria-labelledby="addStoryModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="addStoryModalDialogLabel">Add Story</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="addStoryModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="addStoryModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+            <div class="form-group">
+              <label for="addStoryModalDialogDescriptionTextarea">Description</label>
+              <textarea class="form-control" id="addStoryModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="addStoryModalDialogStoryPointsInput">Story Points</label>
+              <input type="number" class="form-control" id="addStoryModalDialogStoryPointsInput" name="StoryPoints" value="0">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="addStoryModalDialogButton" type="button" class="btn btn-success">Add Story</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit-Story-Dialog -->
+    <div class="modal fade" id="editStoryModalDialog" tabindex="-1" role="dialog" aria-labelledby="editStoryModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="editStoryModalDialogLabel">Edit Story</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editStoryModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="editStoryModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+            <div class="form-group">
+              <label for="editStoryModalDialogDescriptionTextarea">Description</label>
+              <textarea class="form-control" id="editStoryModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="editStoryModalDialogStoryPointsInput">Story Points</label>
+              <input type="number" class="form-control" id="editStoryModalDialogStoryPointsInput" name="StoryPoints" value="0">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button id="editStoryModalDialogButton" type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete-Story-Dialog -->
+    <div class="modal fade" id="deleteStoryModalDialog" tabindex="-1" role="dialog" aria-labelledby="deleteStoryModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="deleteStoryModalDialogLabel">Delete Story</h4>
+          </div>
+          <div class="modal-body">
+            Would you really delete this story?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button id="deleteStoryModalDialogButton" type="button" class="btn btn-danger">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <!-- Add-Task-Dialog -->
+    <div class="modal fade" id="addTaskModalDialog" tabindex="-1" role="dialog" aria-labelledby="addTaskModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="addTaskModalDialogLabel">Add Task</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editTaskModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="addTaskModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+            <div class="form-group">
+              <label for="editTaskModalDialogDescriptionTextarea">Description</label>
+              <textarea class="form-control" id="addTaskModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="addTaskModalDialogButton" type="button" class="btn btn-success">Add Task</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit-Task-Dialog -->
+    <div class="modal fade" id="editTaskModalDialog" tabindex="-1" role="dialog" aria-labelledby="editTaskModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="editTaskModalDialogLabel">Edit Task</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editTaskModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="editTaskModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+            <div class="form-group">
+              <label for="editTaskModalDialogDescriptionTextarea">Description</label>
+              <textarea class="form-control" id="editTaskModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="editTaskModalDialogButton" type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete-Confirm-Dialog -->
+    <div class="modal fade" id="deleteConfirmModalDialog" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="deleteConfirmModalDialogLabel">Delete</h4>
+          </div>
+          <div class="modal-body">
+            Would you really delete this entry?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button id="deleteConfirmModalDialogButton" type="button" class="btn btn-danger">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add-Sprint-Dialog -->
+    <div class="modal fade" id="addSprintModalDialog" tabindex="-1" role="dialog" aria-labelledby="addSprintModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="addSprintModalDialogLabel">Add Sprint</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="addSprintModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="addSprintModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+            <div class="form-group">
+              <label for="addSprintModalDialogStartDateInput">Start Date</label>
+              <input type="text" class="form-control" data-mask="9999-99-99" id="addSprintModalDialogStartDateInput" name="Caption" placeholder="yyyy-mm-dd">
+            </div>
+            <div class="form-group">
+              <label for="addSprintModalDialogEndDateInput">End Date</label>
+              <input type="text" class="form-control" data-mask="9999-99-99" id="addSprintModalDialogEndDateInput" name="Caption" placeholder="yyyy-mm-dd">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="addSprintModalDialogButton" type="button" class="btn btn-success">Add Sprint</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit-Sprint-Dialog -->
+    <div class="modal fade" id="editSprintModalDialog" tabindex="-1" role="dialog" aria-labelledby="editSprintModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="editSprintModalDialogLabel">Edit Sprint</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editSprintModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="editSprintModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+            <div class="form-group">
+              <label for="editSprintModalDialogStartDateInput">Start Date</label>
+              <input type="text" class="form-control" data-mask="9999-99-99"  id="editSprintModalDialogStartDateInput" name="Caption" placeholder="yyyy-mm-dd">
+            </div>
+            <div class="form-group">
+              <label for="editSprintModalDialogEndDateInput">End Date</label>
+              <input type="text" class="form-control" data-mask="9999-99-99" id="editSprintModalDialogEndDateInput" name="Caption" placeholder="yyyy-mm-dd">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="editSprintModalDialogButton" type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete-Story-Dialog -->
+    <div class="modal fade" id="deleteSprintModalDialog" tabindex="-1" role="dialog" aria-labelledby="deleteSprintModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="deleteSprintModalDialogLabel">Delete Sprint</h4>
+          </div>
+          <div class="modal-body">
+            Would you really delete this sprint?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button id="deleteSprintModalDialogButton" type="button" class="btn btn-danger">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add-Team-Dialog -->
+    <div class="modal fade" id="addTeamModalDialog" tabindex="-1" role="dialog" aria-labelledby="addTeamModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="addTeamModalDialogLabel">Add Team</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="addTeamModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="addTeamModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="addTeamModalDialogButton" type="button" class="btn btn-success">Add Team</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit-Team-Dialog -->
+    <div class="modal fade" id="editTeamModalDialog" tabindex="-1" role="dialog" aria-labelledby="editTeamtModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="editTeamModalDialogLabel">Edit Sprint</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editTeamModalDialogCaptionInput">Caption</label>
+              <input type="text" class="form-control" id="editTeamModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button id="editTeamModalDialogButton" type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete-Team-Dialog -->
+    <div class="modal fade" id="deleteTeamModalDialog" tabindex="-1" role="dialog" aria-labelledby="deleteTeamModalDialogLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="deleteTeamModalDialogLabel">Delete Sprint</h4>
+          </div>
+          <div class="modal-body">
+            Would you really delete this team?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button id="deleteTeamModalDialogButton" type="button" class="btn btn-danger">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Templates -->
+    <script id="scrumboardTemplate" type="text/x-handlebars-template">
+      <table class="scrumboard">
+        <thead>
+          <tr>
+            <th style="width: {{ColumnWidth}}%;">
+              <div class="icon-toolbar">
+                <a href="javascript:addStory({{Id}})" title="Add new story"><i class="icon-add"></i></a>
+              </div>
+              <span>STORIES</span>
+            </th>
+            {{#States}}
+              <th style="width: {{../ColumnWidth}}%;">{{Caption}}</th>
+            {{/States}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#Stories}}
+            {{> Story}}
+          {{/Stories}}
+        </tbody>
+      </table>
+    </script>
+    <script id="storyTemplate" type="text/x-handlebars-template">
+      <tr id="story{{Id}}">
+        <td>
+          <div class="icon-toolbar">
+            <a href="javascript:editStory({{Id}})" title="Edit"><i class="icon-edit"></i></a>
+            <a href="javascript:deleteStory({{Id}})" title="Delete"><i class="icon-delete"></i></a>
+            <a href="javascript:addTask({{Id}})" title="Add new task"><i class="icon-add"></i></a>
+          </div>
+          <div>
+            <strong>{{Caption}}  <span class="badge">{{StoryPoints}}</span></strong><br />
+            <small>{{Description}}</small>
+          </div>
+        </td>
+        
+        {{#TaskStates}}
+          <td ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" data-scrum-story-id="{{../Id}}" data-scrum-task-state-id="{{Id}}">
+            {{#Tasks}}
+              {{> Task}}
+            {{/Tasks}}
+          </td>
+        {{/TaskStates}}
+      </tr>
+    </script>
+    <script id="taskTemplate" type="text/x-handlebars-template">
+      <div id="task{{Id}}" class="task" draggable="true" data-scrum-story-id="{{StoryId}}" data-scrum-task-id="{{Id}}" ondragstart="drag(event)">
+        <div class="head">
+          <div class="icon-toolbar">
+            <a href="javascript:toggleTask({{Id}})" title="Toggle"><i class="glyphicon glyphicon-collapse-down"></i></a>
+            <a href="javascript:editTask({{Id}})" title="Edit"><i class="icon-edit"></i></a>
+            <a href="javascript:deleteTask({{Id}})" title="Delete"><i class="icon-delete"></i></a>
+          </div>
+          <span>{{Caption}}&nbsp;</span>
+        </div>
+        <div class="body">
+          {{{Description}}}
+        </div>
+      </div>
+    </script>
+    <script id="menuEntryTemplate" type="text/x-handlebars-template">
+      <li><a href="javascript:setSprint({{Id}})">{{Caption}}</a></li>
+    </script>
+    <script id="chooserTemplate" type="text/x-handlebars-template">
+      <h1>{{Caption}}</h1>
+      <div class="list-group">
+        {{#Sprints}}
+          <a href="indx.html#{{Id}}" class="list-group-item">{{Caption}}</a>
+        {{/Sprints}}
+      </div>
+    </script>
+    <script id="sprintsTemplate" type="text/x-handlebars-template">
+      <ul class="list-group">
+        {{#Sprints}}
+          <li class="list-group-item">
+            <div class="icon-toolbar">
+              <a href="#/Sprint/{{Id}}" title="Show sprint"><i class="icon-show"></i> Show</a>
+              <a href="javascript:editSprint({{Id}})" title="Edit"><i class="icon-edit"></i> Edit</a>
+              <a href="javascript:deleteSprint({{Id}})" title="Delete"><i class="icon-delete"></i> Delete</a>
+            </div>
+            <!--<a href="javascript:setSprint({{Id}})">-->
+              <strong>{{Caption}}</strong> <small>{{StartDate}} - {{EndDate}}</small>
+              <!--<span class="label label-default">2 Stories</span> <span class="label label-default">18 Storypoints</span> <span class="label label-default">8 Tasks</span>-->
+            <!--</a>-->
+          </li>
+        {{/Sprints}}
+        {{^Sprints}}
+          <li class="list-group-item">No sprints in this team</li>
+        {{/Sprints}}
+        <a  class="list-group-item" href="javascript:addSprint({{Id}})"><i class="icon-add"></i> Add a new sprint</a>
+      </ul>
+      
+    </script>
+    <script id="teamViewTemplate" type="text/x-handlebars-template">
+      <ul class="list-group">
+        {{#Teams}}
+          <li id="team{{Id}}" class="list-group-item">
+            <div class="icon-toolbar">
+              <a href="#/Team/{{Id}}/Sprints" title="Show sprint"><i class="icon-show"></i> Show</a>
+              <a href="javascript:editTeam({{Id}})" title="Edit"><i class="icon-edit"></i> Edit</a>
+              <a href="javascript:deleteTeam({{Id}})" title="Delete"><i class="icon-delete"></i> Delete</a>
+            </div>
+            {{Caption}}
+          </li>
+        {{/Teams}}
+        {{^Teams}}
+          <li class="list-group-item">No teams avalibel, please add one</li>
+        {{/Teams}}
+        <a  class="list-group-item" href="javascript:addTeam()"><i class="icon-add"></i> Add a new team</a>
+      </ul>
+    </script>
+
+    <!-- Javascript Includes-->
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/sammy.min.js"></script>
+    <script type="text/javascript" src="assets/js/handlebars.js"></script>
+    <script type="text/javascript" src="assets/js/holder.js"></script>
+    <script type="text/javascript" src="assets/js/scrumboard.js"></script>
+
+    <script type="text/javascript">
+      
+      function toggleFullscreen() {
+        if ($('#container').hasClass('container')) {
+          $('#container').removeClass('container');
+        } else {
+          $('#container').addClass('container');
+        }
+      }
+
+      function toggleTask(id) {
+        $('#task' + id + ' .body').slideToggle('fast');
+      }
+
+      var app = $.sammy(function() {
+        this.get('/', function() {
+          reloadTeamView();
+        });
+        this.get('#/Teams', function() {
+          reloadTeamView();
+        });
+        this.get('#/Team/:id/Sprints', function() {
+          setTeam(this.params['id']);
+          reloadSprintView();
+        });
+        this.get('#/Sprint/:id', function() {
+          setSprint(this.params['id']);
+          reloadBoard();
+        });
+      });
+
+      $(function() {
+        app.run();
+      });
+
+    </script>
+
+  </body>
+</html>
