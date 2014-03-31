@@ -84,6 +84,7 @@ function allowDrop(ev) {
  * @param  object ev The current MouseEvent-Object
  */
 function drag(ev) {
+  ev.dataTransfer.setData("Text", ev.target.id);
   activeDragObjectId = ev.target.id;
 }
 
