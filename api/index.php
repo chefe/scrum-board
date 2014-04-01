@@ -7,6 +7,8 @@ require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
+// Disable error reporting
+error_reporting(0);
 
 /*********************************************************************************************************
 * INCLUDE ROUTE IMPLEMENTATIONS
