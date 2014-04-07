@@ -26,7 +26,3 @@ If you come across any bugs in scrumboard don't hesitate to tell us: [Create an 
 * [JQuery](http://jquery.com/) on which is a dependency from JasnyBootstrap and simplifys a lot of javascript work
 * [HandlebarJs](http://handlebarsjs.com/) which is a tiny javascript template engine 
 * [SammyJs](http://sammyjs.org/) which is a small javascript framework to create aplications with nice restful urls
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/chefe/scrum-board/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
