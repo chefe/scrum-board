@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/chefe/scrum-board.png?label=ready&title=Ready)](https://waffle.io/chefe/scrum-board)
 # Scrum-Board
 ## Description
 This is a small web-based scrumboard. It includes a html file which make ajax request to a php rest api to load the data. It is realised with some javascript libraries.
