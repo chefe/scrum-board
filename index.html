@@ -24,6 +24,20 @@
         border-left: 1px solid #DDDDDD;
         padding: 13px;
       }
+      a:hover {
+        text-decoration: none;
+      }
+      @media print {
+        #container {
+          width: 100%;
+        }
+        #headerSection {
+          display: none;
+        }
+        .icon-toolbar {
+          display: none;
+        }
+      }
     </style>
 
   </head>
@@ -34,14 +48,16 @@
     <div id="container" class="container">
 
       <!-- Site-Header -->
-      <section>
+      <section id="headerSection">
         <div class="row-fullWidth">
           <div class="page-header">
-            <h1>Scrum-Board
+            <h1>Luk's Scrum-Board
               <div class="pull-right">
                 <div class="btn-group">
-                  <a class="btn btn-lg btn-default" href="#/Teams" title="Home"><i class="glyphicon glyphicon-home"></i> Home</a>
-                  <a class="btn btn-lg btn-default" href="javascript:toggleFullscreen()" title="Toggle Fullscreen"><i class="glyphicon glyphicon-fullscreen"></i></a>
+                  <a id="homeBtn" class="btn btn-lg btn-default" href="#/Teams" title="Home"><i class="glyphicon glyphicon-home"></i> Home</a>
+                  <a id="modeBtn" class="btn btn-lg btn-default" href="javascript:toggleMode()" title="Change to edit mode"><i class="glyphicon glyphicon-pencil"></i></a>
+                  <a id="collapseBtn" class="btn btn-lg btn-default" href="javascript:toggleCollapse()" title="Collapse all tasks"><i class="glyphicon glyphicon-collapse-up"></i></a>
+                  <a id="fullscreenBtn" class="btn btn-lg btn-default" href="javascript:toggleFullscreen()" title="Toggle Fullscreen"><i class="glyphicon glyphicon-fullscreen"></i></a>
                 </div>
               </div>
             </h1>
@@ -374,7 +390,7 @@
         <thead>
           <tr>
             <th style="width: {{ColumnWidth}}%;">
-              <div class="icon-toolbar">
+              <div class="icon-toolbar" style="display: none;">
                 <a href="javascript:addStory({{Id}})" title="Add new story"><i class="icon-add"></i></a>
               </div>
               <span>STORIES</span>
@@ -394,7 +410,7 @@
     <script id="storyTemplate" type="text/x-handlebars-template">
       <tr id="story{{Id}}">
         <td>
-          <div class="icon-toolbar">
+          <div class="icon-toolbar" style="display: none;">
             <a href="javascript:editStory({{Id}})" title="Edit"><i class="icon-edit"></i></a>
             <a href="javascript:deleteStory({{Id}})" title="Delete"><i class="icon-delete"></i></a>
             <a href="javascript:addTask({{Id}})" title="Add new task"><i class="icon-add"></i></a>
@@ -415,18 +431,19 @@
       </tr>
     </script>
     <script id="taskTemplate" type="text/x-handlebars-template">
-      <div id="task{{Id}}" class="task" draggable="true" data-scrum-story-id="{{StoryId}}" data-scrum-task-id="{{Id}}" ondragstart="drag(event)">
+      <div id="task{{Id}}" class="task" draggable="false" data-scrum-story-id="{{StoryId}}" data-scrum-task-id="{{Id}}" ondragstart="drag(event)">
         <div class="head">
-          <div class="icon-toolbar">
-            <a href="javascript:toggleTask({{Id}})" title="Toggle"><i class="glyphicon glyphicon-collapse-down"></i></a>
+          <div class="icon-toolbar" style="display: none;">
             <a href="javascript:editTask({{Id}})" title="Edit"><i class="icon-edit"></i></a>
             <a href="javascript:deleteTask({{Id}})" title="Delete"><i class="icon-delete"></i></a>
           </div>
           <span>{{Caption}}&nbsp;</span>
         </div>
+        {{#if Description}}
         <div class="body">
           {{{Description}}}
         </div>
+        {{/if}}
       </div>
     </script>
     <script id="menuEntryTemplate" type="text/x-handlebars-template">
@@ -450,7 +467,7 @@
               <a href="javascript:deleteSprint({{Id}})" title="Delete"><i class="icon-delete"></i> Delete</a>
             </div>
             <!--<a href="javascript:setSprint({{Id}})">-->
-              <strong>{{Caption}}</strong> <small>{{StartDate}} - {{EndDate}}</small>
+              <strong>{{Caption}}</strong> <!--<small>{{StartDate}} - {{EndDate}}</small>-->
               <!--<span class="label label-default">2 Stories</span> <span class="label label-default">18 Storypoints</span> <span class="label label-default">8 Tasks</span>-->
             <!--</a>-->
           </li>
@@ -477,7 +494,7 @@
         {{^Teams}}
           <li class="list-group-item">No teams avalibel, please add one</li>
         {{/Teams}}
-        <a  class="list-group-item" href="javascript:addTeam()"><i class="icon-add"></i> Add a new team</a>
+        <a class="list-group-item" href="javascript:addTeam()"><i class="icon-add"></i> Add a new team</a>
       </ul>
     </script>
 
@@ -491,32 +508,26 @@
 
     <script type="text/javascript">
       
-      function toggleFullscreen() {
-        if ($('#container').hasClass('container')) {
-          $('#container').removeClass('container');
-        } else {
-          $('#container').addClass('container');
-        }
-      }
-
-      function toggleTask(id) {
-        $('#task' + id + ' .body').slideToggle('fast');
-      }
+      
 
       var app = $.sammy(function() {
         this.get('/', function() {
           reloadTeamView();
+          enableMainButtons(false);
         });
         this.get('#/Teams', function() {
           reloadTeamView();
+          enableMainButtons(false);
         });
         this.get('#/Team/:id/Sprints', function() {
           setTeam(this.params['id']);
           reloadSprintView();
+          enableMainButtons(false);
         });
         this.get('#/Sprint/:id', function() {
           setSprint(this.params['id']);
           reloadBoard();
+          enableMainButtons(true);
         });
       });
 

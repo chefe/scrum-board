@@ -457,6 +457,7 @@ function reloadBoard() {
 
           // Show table
           showTab('#boardView');
+          setEditMode($('#modeBtn').hasClass('active'));
         } else {
           showAlert(sprintsJson);
         }
@@ -788,3 +789,77 @@ $(function() {
 
 });
 
+
+
+
+
+
+function toggleFullscreen() {
+  if ($('#container').hasClass('container')) {
+    $('#container').removeClass('container');
+    $('#fullscreenBtn').addClass('active');
+  } else {
+    $('#container').addClass('container');
+    $('#fullscreenBtn').removeClass('active');
+  }
+}
+
+function toggleMode() {
+  setEditMode(!$('#modeBtn').hasClass('active'));
+}
+
+function setEditMode(bEnabled) {
+  if (!bEnabled) {
+    $('#modeBtn').removeClass('active');
+    $('#modeBtn').attr('title','Change to edit mode');
+    $('#modeBtn i').removeClass('glyphicon-eye-open');
+    $('#modeBtn i').addClass('glyphicon-pencil');
+    $('.icon-toolbar').css('display', 'none');
+    $('ul.list-group > a').css('display', 'none');
+    $('table.scrumboard tr > td > div').attr('draggable', 'false');
+    
+  } else {
+    $('#modeBtn').addClass('active');
+    $('#modeBtn').attr('title','Change to view mode');
+    $('#modeBtn i').removeClass('glyphicon-pencil');
+    $('#modeBtn i').addClass('glyphicon-eye-open');
+    $('.icon-toolbar').css('display', 'block');
+    $('ul.list-group > a').css('display', 'block');
+    $('table.scrumboard tr > td > div').attr('draggable', 'true');
+  }
+}
+
+function toggleCollapse() {
+  if ($('#collapseBtn').hasClass('active')) {
+    $('#collapseBtn').removeClass('active');
+    $('#collapseBtn').attr('title', 'Collapse all tasks');
+    $('#collapseBtn i').removeClass('glyphicon-collapse-down');
+    $('#collapseBtn i').addClass('glyphicon-collapse-up');
+    toggleAllTasks(true);
+  } else {
+    $('#collapseBtn').addClass('active');
+    $('#collapseBtn').attr('title', 'Uncollapse all tasks');
+    $('#collapseBtn i').removeClass('glyphicon-collapse-up');
+    $('#collapseBtn i').addClass('glyphicon-collapse-down');
+    toggleAllTasks(false);
+  }
+}
+
+function toggleAllTasks(show) {
+  if (show) {
+    $('.task .body').slideDown('fast');
+  } else {
+    $('.task .body').slideUp('fast');
+  }
+}
+
+function enableMainButtons(enable) {
+  $('#modeBtn').removeClass('active');
+  $('#collapseBtn').removeClass('active');
+
+  var displayStyle = enable ? 'block' : 'none';
+  $('#homeBtn').css('display', displayStyle);
+  $('#modeBtn').css('display', displayStyle);
+  $('#collapseBtn').css('display', displayStyle);
+  $('#fullscreenBtn').css('display', displayStyle);
+}
