@@ -505,37 +505,5 @@
     <script type="text/javascript" src="assets/js/handlebars.js"></script>
     <script type="text/javascript" src="assets/js/holder.js"></script>
     <script type="text/javascript" src="assets/js/scrumboard.js"></script>
-
-    <script type="text/javascript">
-      
-      
-
-      var app = $.sammy(function() {
-        this.get('/', function() {
-          reloadTeamView();
-          enableMainButtons(false);
-        });
-        this.get('#/Teams', function() {
-          reloadTeamView();
-          enableMainButtons(false);
-        });
-        this.get('#/Team/:id/Sprints', function() {
-          setTeam(this.params['id']);
-          reloadSprintView();
-          enableMainButtons(false);
-        });
-        this.get('#/Sprint/:id', function() {
-          setSprint(this.params['id']);
-          reloadBoard();
-          enableMainButtons(true);
-        });
-      });
-
-      $(function() {
-        app.run();
-      });
-
-    </script>
-
   </body>
 </html>

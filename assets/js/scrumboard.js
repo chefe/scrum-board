@@ -863,3 +863,32 @@ function enableMainButtons(enable) {
   $('#collapseBtn').css('display', displayStyle);
   $('#fullscreenBtn').css('display', displayStyle);
 }
+
+/**************************************************************************************************
+* SETUP ROUTES FOR SAMMY 
+**************************************************************************************************/
+
+var app = $.sammy(function() {
+  this.get('/', function() {
+    reloadTeamView();
+    enableMainButtons(false);
+  });
+  this.get('#/Teams', function() {
+    reloadTeamView();
+    enableMainButtons(false);
+  });
+  this.get('#/Team/:id/Sprints', function() {
+    setTeam(this.params['id']);
+    reloadSprintView();
+    enableMainButtons(false);
+  });
+  this.get('#/Sprint/:id', function() {
+    setSprint(this.params['id']);
+    reloadBoard();
+    enableMainButtons(true);
+  });
+});
+
+$(function() {
+  app.run();
+});
