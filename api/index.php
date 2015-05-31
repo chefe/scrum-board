@@ -7,6 +7,9 @@
 // Disable error reporting
 error_reporting(0);
 
+// Set content type
+header("Content-Type: application/json");
+
 // Setup slim application
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
