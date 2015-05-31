@@ -1,17 +1,19 @@
 <?php
 
 /*********************************************************************************************************
-* SLIM APPLICATION SETUP ROUTES
+* SETUP APPLICATION
 *********************************************************************************************************/
-require 'Slim/Slim.php';
-\Slim\Slim::registerAutoloader();
-$app = new \Slim\Slim();
 
 // Disable error reporting
 error_reporting(0);
 
+// Setup slim application
+require 'Slim/Slim.php';
+\Slim\Slim::registerAutoloader();
+$app = new \Slim\Slim();
+
 /*********************************************************************************************************
-* INCLUDE ROUTE IMPLEMENTATIONS
+* INCLUDE ROUTE IMPLEMENTATIONS AND HELPERS
 *********************************************************************************************************/
 
 // Include helper functions
@@ -23,7 +25,6 @@ include("routes/story.php");
 include("routes/sprint.php");
 include("routes/team.php");
 include("routes/state.php");
-
 
 /*********************************************************************************************************
 * DEFINE ROUTES

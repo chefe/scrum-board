@@ -15,7 +15,7 @@ function getConnection() {
 
 /**
  * Return the result of an api-request as a json-object
- * @param objct $data The data which should returned to the client
+ * @param object $data The data which should returned to the client
  * @param string $type The type of the api-response [success, error, info]
  * @param string $title An addition title which can display in an alert on the client side
  * @param string $description An addition description which can display in an alert on the client side
@@ -44,6 +44,10 @@ function endsWith($haystack, $needle) {
   return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 }
 
+/**
+ * Write a json string to the page with all data from the specified table
+ * @param string $tablename The name of the table wĥose data should be printed 
+ */
 function apiGetObjects($tablename) {
   $sql = "SELECT * FROM " . $tablename;
   try {
@@ -58,6 +62,11 @@ function apiGetObjects($tablename) {
   }
 }
 
+/**
+ * Write a json string to the page with the data of the entry with the specified id from the specified table
+ * @param string $tablename The name of the table wĥose data should be printed 
+ * @param integer $id The id of the entry which should be printed
+ */
 function apiGetObject($tablename, $id) {
   $sql = "SELECT * FROM " . $tablename . " WHERE Id = :id";
   try {
@@ -77,6 +86,11 @@ function apiGetObject($tablename, $id) {
   }
 }
 
+/**
+ * Write a json string to the page with the result of a entry deletion from the specified table
+ * @param string $tablename The name of the table wĥose entry should be deleted 
+ * @param integer $id The id of the entry which should be deleted
+ */
 function apiDeleteObject($tablename, $id) {
   $sql = "DELETE FROM " . $tablename . " WHERE Id = :id";
   try {
