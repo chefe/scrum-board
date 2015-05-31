@@ -5,11 +5,11 @@ This is a small web-based scrumboard. It includes a html file which make ajax re
 ## Warning 
 This applications has only some minimal functions and is still in beta but you can try it anyway. 
 
-## Known Issues
-* Drag and Drop of the tasks only works with **Google Chrome** at the moment
+## Browser support
+The application should work in new versions of **Firefox** and **Google Chrome**. Other browser are not tested.
 
 ## Support
-If you come across any bugs in scrumboard don't hesitate to tell us: [Create an Issue](https://github.com/chefe/scrum-board/issues/new)
+If you come across any bugs in scrumboard don't hesitate to tell me: [Create an Issue](https://github.com/chefe/scrum-board/issues/new)
 
 ## License
 [See license file.](https://github.com/chefe/scrum-board/blob/master/LICENSE)
