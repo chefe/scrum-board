@@ -4,19 +4,7 @@
  * Return all available sprints as a json object
  */
 function apiGetSprints() {
-  $sql = "SELECT * FROM Sprint";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->execute();
-    while ($result = $stmt->fetchObject()) {
-      $results[] = $result;
-    }
-    $dbcon = null;
-    returnResult($results, "success");
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "Could not get the sprints because of an error");
-  }
+  apiGetObjects("Sprint");
 }
 
 /**
@@ -24,22 +12,7 @@ function apiGetSprints() {
  * @param int $id The id of the sprint to return
  */
 function apiGetSprint($id) {
-	$sql = "SELECT * FROM Sprint WHERE Id = :id";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->bindParam("id", $id);
-    $stmt->execute();
-    $result = $stmt->fetchObject();
-    $dbcon = null;
-    if ($result) {
-      returnResult($result, "success");
-    } else {
-      returnResult($result, "error", "Error", "No sprint was found with the given id");
-    }
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "The data of the sprint could not getted because of an error");
-  }
+	apiGetObject("Sprint", $id);
 }
 
 /**
@@ -92,18 +65,7 @@ function apiUpdateSprint($id) {
  * @param int $id The id of the sprint to delete
  */
 function apiDeleteSprint($id) {
-  $sql = "DELETE FROM Sprint WHERE Id = :id";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->bindParam("id", $id);
-    $stmt->execute();
-    $result = ($stmt->rowCount() == 1);
-    $dbcon = null;
-    returnResult($result, "success", "Sprint deleted", "The sprint was successfully deleted");
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "The sprint could not delete because of an error");
-  }
+  apiDeleteObject("Sprint", $id);
 }
 
 /**
@@ -151,7 +113,6 @@ function apiGetTasksBySprint($id) {
 
 function apiGetSprintComplete($id) {
 	try {
-
     // Setup necessary variables
     $dbcon = getConnection();
     $states = array();

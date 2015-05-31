@@ -4,19 +4,7 @@
  * Return all available tasks as a json object
  */
 function apiGetTasks() {
-  $sql = "SELECT * FROM Task";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->execute();
-    while ($result = $stmt->fetchObject()) {
-      $results[] = $result;
-    }
-    $dbcon = null;
-    returnResult($results, "success");
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "Tasks could not getted because of an error");
-  }
+  apiGetObjects("Task");
 }
 
 /**
@@ -24,22 +12,7 @@ function apiGetTasks() {
  * @param int $id The id of the task to return
  */
 function apiGetTask($id) {
-	$sql = "SELECT * FROM Task WHERE Id = :id";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->bindParam("id", $id);
-    $stmt->execute();
-    $result = $stmt->fetchObject();
-    $dbcon = null;
-    if ($result) {
-      returnResult($result, "success");
-    } else {
-      returnResult($result, "error", "Error", "No task was found with the given id");
-    }
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "The data of the task could not getted because of an error");
-  }
+	apiGetObject("Task", $id);
 }
 
 /**
@@ -90,18 +63,7 @@ function apiUpdateTask($id) {
  * @param int $id The id of the task to delete
  */
 function apiDeleteTask($id) {
-  $sql = "DELETE FROM Task WHERE Id = :id";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->bindParam("id", $id);
-    $stmt->execute();
-    $result = ($stmt->rowCount() == 1);
-    $dbcon = null;
-    returnResult($result, "success", "Task deleted", "The task was successfully deleted");
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "The task could not delete because of an error");
-  }
+  apiDeleteObject("Task", $id);
 }
 
 /**

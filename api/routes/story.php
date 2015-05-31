@@ -4,19 +4,7 @@
  * Return all available stories as a json object
  */
 function apiGetStories() {
-  $sql = "SELECT * FROM Story";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->execute();
-    while ($result = $stmt->fetchObject()) {
-      $results[] = $result;
-    }
-    $dbcon = null;
-    returnResult($results, "success");
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "Could not get the stories because of an error");
-  }
+  apiGetObjects("Story");
 }
 
 /**
@@ -24,22 +12,7 @@ function apiGetStories() {
  * @param int $id The id of the story to return
  */
 function apiGetStory($id) {
-	$sql = "SELECT * FROM Story WHERE Id = :id";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->bindParam("id", $id);
-    $stmt->execute();
-    $result = $stmt->fetchObject();
-    $dbcon = null;
-    if ($result) {
-      returnResult($result, "success");
-    } else {
-      returnResult($result, "error", "Error", "No story was found with the given id");
-    }
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "The data of the story could not getted because of an error");
-  }
+	apiGetObject("Story", $id);
 }
 
 /**
@@ -92,18 +65,7 @@ function apiUpdateStory($id) {
  * @param int $id The id of the story to delete
  */
 function apiDeleteStory($id) {
-  $sql = "DELETE FROM Story WHERE Id = :id";
-  try {
-    $dbcon = getConnection();
-    $stmt = $dbcon->prepare($sql);
-    $stmt->bindParam("id", $id);
-    $stmt->execute();
-    $result = ($stmt->rowCount() == 1);
-    $dbcon = null;
-    returnResult($result, "success", "Story deleted", "The story was successfully deleted");
-  } catch(PDOException $e) {
-    returnResult($e, "error", "Error", "The story could not delete because of an error");
-  }
+  apiDeleteObject("Story", $id);
 }
 
 /**
