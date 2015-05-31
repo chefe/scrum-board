@@ -466,10 +466,7 @@
               <a href="javascript:editSprint({{Id}})" title="Edit"><i class="icon-edit"></i> Edit</a>
               <a href="javascript:deleteSprint({{Id}})" title="Delete"><i class="icon-delete"></i> Delete</a>
             </div>
-            <!--<a href="javascript:setSprint({{Id}})">-->
-              <strong>{{Caption}}</strong> <!--<small>{{StartDate}} - {{EndDate}}</small>-->
-              <!--<span class="label label-default">2 Stories</span> <span class="label label-default">18 Storypoints</span> <span class="label label-default">8 Tasks</span>-->
-            <!--</a>-->
+            <strong>{{Caption}}</strong> <small>{{StartDate}} - {{EndDate}}</small>
           </li>
         {{/Sprints}}
         {{^Sprints}}
@@ -477,7 +474,6 @@
         {{/Sprints}}
         <a  class="list-group-item" href="javascript:addSprint({{Id}})"><i class="icon-add"></i> Add a new sprint</a>
       </ul>
-      
     </script>
     <script id="teamViewTemplate" type="text/x-handlebars-template">
       <ul class="list-group">
