@@ -1,14 +1,11 @@
 /**************************************************************************************************
-* SCRUMBOARD.JS by 
-***************************************************************************************************
-* Version:      1.0
-* Author:       Chefe
-* Description:  A small javascript file to enable the scrumboard functionality
+* Scrumboard Application by Chefe
 **************************************************************************************************/
 
 /**************************************************************************************************
 * DOCUMENT-STRUCTURE                                                                               
 ***************************************************************************************************
+* - Global members
 * - Drag & Drop
 * - Oncommand-Event
 * - Gui-Update
@@ -17,48 +14,23 @@
 **************************************************************************************************/
 
 /**************************************************************************************************
-* LICENCE                                                                              
-***************************************************************************************************
-* The MIT License (MIT)
-* 
-* Copyright (c) <year> <copyright holders>
-* 
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-* 
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-* 
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-**************************************************************************************************/
-
-
-
-/**************************************************************************************************
 * GLOBAL MEMBERS
 **************************************************************************************************/
 
-// Member variable to story the id of the current dragged task
+// Global member variable to store the id of the current dragged task
 var activeDragObjectId = 0;
+
+// Global member variables to store the id of the current team and the active sprint
 var activeTeamId = 1;
 var activeSprintId = 0;
+
+// Global member variables to store the html code of the templates for the template engine
 var templateSprints = null;
 var templateScrumboard = null;
 var templateStory = null;
 var templateTask = null;
 var templateMenuEntry = null;
 var templateTeamView = null;
-
 
 /**************************************************************************************************
 * DRAG AND DROP FUNCTIONS
@@ -814,8 +786,8 @@ function setEditMode(bEnabled) {
     $('#modeBtn').attr('title','Change to edit mode');
     $('#modeBtn i').removeClass('glyphicon-eye-open');
     $('#modeBtn i').addClass('glyphicon-pencil');
-    $('.icon-toolbar').css('display', 'none');
-    $('ul.list-group > a').css('display', 'none');
+    $('.icon-toolbar').addClass('hidden');
+    $('ul.list-group > a').addClass('hidden');
     $('table.scrumboard tr > td > div').attr('draggable', 'false');
     
   } else {
@@ -823,8 +795,8 @@ function setEditMode(bEnabled) {
     $('#modeBtn').attr('title','Change to view mode');
     $('#modeBtn i').removeClass('glyphicon-pencil');
     $('#modeBtn i').addClass('glyphicon-eye-open');
-    $('.icon-toolbar').css('display', 'block');
-    $('ul.list-group > a').css('display', 'block');
+    $('.icon-toolbar').removeClass('hidden');
+    $('ul.list-group > a').removeClass('hidden');
     $('table.scrumboard tr > td > div').attr('draggable', 'true');
   }
 }
@@ -857,17 +829,24 @@ function enableMainButtons(enable) {
   $('#modeBtn').removeClass('active');
   $('#collapseBtn').removeClass('active');
 
-  var displayStyle = enable ? 'block' : 'none';
-  $('#homeBtn').css('display', displayStyle);
-  $('#modeBtn').css('display', displayStyle);
-  $('#collapseBtn').css('display', displayStyle);
-  $('#fullscreenBtn').css('display', displayStyle);
+  if (enable) {
+    $('#homeBtn').removeClass('hidden');
+    $('#modeBtn').removeClass('hidden');
+    $('#collapseBtn').removeClass('hidden');
+    $('#fullscreenBtn').removeClass('hidden');
+  } else {
+    $('#homeBtn').addClass('hidden');
+    $('#modeBtn').addClass('hidden');
+    $('#collapseBtn').addClass('hidden');
+    $('#fullscreenBtn').addClass('hidden');
+  }
 }
 
 /**************************************************************************************************
 * SETUP ROUTES FOR SAMMY 
 **************************************************************************************************/
 
+// Setup routes
 var app = $.sammy(function() {
   this.get('/', function() {
     reloadTeamView();
@@ -889,6 +868,7 @@ var app = $.sammy(function() {
   });
 });
 
+// Run sammy
 $(function() {
   app.run();
 });
