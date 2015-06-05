@@ -1,0 +1,43 @@
+{
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-less": "^1.0.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "name": "scrumboard",
+  "description": "This is a small web-based scrumboard. It includes a html file which make ajax request to a php rest api to load the data. It is realised with some javascript libraries.",
+  "version": "1.0.0",
+  "main": "index.html",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-uglify": "^0.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chefe/scrum-board.git"
+  },
+  "keywords": [
+    "scrum",
+    "board",
+    "php",
+    "mysql",
+    "rest",
+    "api",
+    "ajax"
+  ],
+  "author": "Chefe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chefe/scrum-board/issues"
+  },
+  "homepage": "https://github.com/chefe/scrum-board#readme"
+}
