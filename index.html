@@ -11,35 +11,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/scrumboard.min.css">
-
-    <style>
-      ul.list-group div.icon-toolbar {
-        /*margin-top: -10px;
-        margin-bottom: -10px;*/
-        margin-right: -15px;
-      }
-
-      ul.list-group div.icon-toolbar > a 
-      {
-        border-left: 1px solid #DDDDDD;
-        padding: 13px;
-      }
-      a:hover {
-        text-decoration: none;
-      }
-      @media print {
-        #container {
-          width: 100%;
-        }
-        #headerSection {
-          display: none;
-        }
-        .icon-toolbar {
-          display: none;
-        }
-      }
-    </style>
-
+    
   </head>
   <body>
 
@@ -390,7 +362,7 @@
         <thead>
           <tr>
             <th style="width: {{ColumnWidth}}%;">
-              <div class="icon-toolbar" style="display: none;">
+              <div class="icon-toolbar hidden">
                 <a href="javascript:addStory({{Id}})" title="Add new story"><i class="icon-add"></i></a>
               </div>
               <span>STORIES</span>
@@ -410,7 +382,7 @@
     <script id="storyTemplate" type="text/x-handlebars-template">
       <tr id="story{{Id}}">
         <td>
-          <div class="icon-toolbar" style="display: none;">
+          <div class="icon-toolbar hidden">
             <a href="javascript:editStory({{Id}})" title="Edit"><i class="icon-edit"></i></a>
             <a href="javascript:deleteStory({{Id}})" title="Delete"><i class="icon-delete"></i></a>
             <a href="javascript:addTask({{Id}})" title="Add new task"><i class="icon-add"></i></a>
@@ -433,7 +405,7 @@
     <script id="taskTemplate" type="text/x-handlebars-template">
       <div id="task{{Id}}" class="task" draggable="false" data-scrum-story-id="{{StoryId}}" data-scrum-task-id="{{Id}}" ondragstart="drag(event)">
         <div class="head">
-          <div class="icon-toolbar" style="display: none;">
+          <div class="icon-toolbar hidden">
             <a href="javascript:editTask({{Id}})" title="Edit"><i class="icon-edit"></i></a>
             <a href="javascript:deleteTask({{Id}})" title="Delete"><i class="icon-delete"></i></a>
           </div>
@@ -495,10 +467,6 @@
     </script>
 
     <!-- Javascript Includes-->
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/sammy.min.js"></script>
-    <script type="text/javascript" src="assets/js/handlebars.js"></script>
-    <script type="text/javascript" src="assets/js/scrumboard.js"></script>
+    <script type="text/javascript" src="assets/js/scrumboard.min.js"></script>
   </body>
 </html>

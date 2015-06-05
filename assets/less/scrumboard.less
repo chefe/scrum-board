@@ -100,3 +100,27 @@ table.scrumboard td.active {
   background-color: #f5f5f5;
   padding-bottom: 40px !important;
 }
+
+ul.list-group div.icon-toolbar {
+  margin-right: -15px;
+}
+
+ul.list-group div.icon-toolbar > a 
+{
+  border-left: 1px solid #DDDDDD;
+  padding: 13px;
+}
+a:hover {
+  text-decoration: none;
+}
+@media print {
+  #container {
+    width: 100%;
+  }
+  #headerSection {
+    display: none;
+  }
+  .icon-toolbar {
+    display: none;
+  }
+}
