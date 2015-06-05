@@ -1,0 +1,4 @@
+node_modules/*
+assets/css/scrumboard.min.css
+assets/js/scrumboard.js
+assets/js/scrumboard.min.js
