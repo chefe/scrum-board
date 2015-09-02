@@ -72,11 +72,11 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="addStoryModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="addStoryModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="addStoryModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the story">
             </div>
             <div class="form-group">
               <label for="addStoryModalDialogDescriptionTextarea">Description</label>
-              <textarea class="form-control" id="addStoryModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+              <textarea class="form-control" id="addStoryModalDialogDescriptionTextarea" name="Description" placeholder="Enter a description for the story"></textarea>
             </div>
             <div class="form-group">
               <label for="addStoryModalDialogStoryPointsInput">Story Points</label>
@@ -102,11 +102,11 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="editStoryModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="editStoryModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="editStoryModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the story">
             </div>
             <div class="form-group">
               <label for="editStoryModalDialogDescriptionTextarea">Description</label>
-              <textarea class="form-control" id="editStoryModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+              <textarea class="form-control" id="editStoryModalDialogDescriptionTextarea" name="Description" placeholder="Enter a description for the story"></textarea>
             </div>
             <div class="form-group">
               <label for="editStoryModalDialogStoryPointsInput">Story Points</label>
@@ -151,11 +151,11 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="editTaskModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="addTaskModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="addTaskModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the task">
             </div>
             <div class="form-group">
               <label for="editTaskModalDialogDescriptionTextarea">Description</label>
-              <textarea class="form-control" id="addTaskModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+              <textarea class="form-control" id="addTaskModalDialogDescriptionTextarea" name="Description" placeholder="Enter a description for the task"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -178,11 +178,11 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="editTaskModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="editTaskModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="editTaskModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the task">
             </div>
             <div class="form-group">
               <label for="editTaskModalDialogDescriptionTextarea">Description</label>
-              <textarea class="form-control" id="editTaskModalDialogDescriptionTextarea" name="Description" placeholder="Enter description"></textarea>
+              <textarea class="form-control" id="editTaskModalDialogDescriptionTextarea" name="Description" placeholder="Enter a description for the task"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -223,7 +223,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="addSprintModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="addSprintModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="addSprintModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the sprint">
             </div>
             <div class="form-group">
               <label for="addSprintModalDialogStartDateInput">Start Date</label>
@@ -253,7 +253,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="editSprintModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="editSprintModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="editSprintModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the sprint">
             </div>
             <div class="form-group">
               <label for="editSprintModalDialogStartDateInput">Start Date</label>
@@ -302,7 +302,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="addTeamModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="addTeamModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="addTeamModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the team">
             </div>
           </div>
           <div class="modal-footer">
@@ -324,7 +324,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="editTeamModalDialogCaptionInput">Caption</label>
-              <input type="text" class="form-control" id="editTeamModalDialogCaptionInput" name="Caption" placeholder="Enter caption">
+              <input type="text" class="form-control" id="editTeamModalDialogCaptionInput" name="Caption" placeholder="Enter a caption for the team">
             </div>
           </div>
           <div class="modal-footer">
@@ -442,7 +442,7 @@
           </li>
         {{/Sprints}}
         {{^Sprints}}
-          <li class="list-group-item">No sprints in this team</li>
+          <li class="list-group-item">No sprints is available for this team</li>
         {{/Sprints}}
         <a  class="list-group-item" href="javascript:addSprint({{Id}})"><i class="icon-add"></i> Add a new sprint</a>
       </ul>
@@ -460,7 +460,7 @@
           </li>
         {{/Teams}}
         {{^Teams}}
-          <li class="list-group-item">No teams avalibel, please add one</li>
+          <li class="list-group-item">No team is available, please add one!</li>
         {{/Teams}}
         <a class="list-group-item" href="javascript:addTeam()"><i class="icon-add"></i> Add a new team</a>
       </ul>
