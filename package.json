@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chefe/scrum-board.git"
+    "url": "git+https://github.com/scrum-board/scrum-board.git"
   },
   "keywords": [
     "scrum",
@@ -37,7 +37,7 @@
   "author": "Chefe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chefe/scrum-board/issues"
+    "url": "https://github.com/scrum-board/scrum-board/issues"
   },
-  "homepage": "https://github.com/chefe/scrum-board#readme"
+  "homepage": "https://github.com/scrum-board/scrum-board#readme"
 }
