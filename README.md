@@ -1,28 +1,3 @@
-# Scrum-Board
-## Description
-This is a small web-based scrumboard. It includes a html file which make ajax request to a php rest api to load the data. It is realised with some javascript libraries.
+# Scrum-Board [DEPRECATED]
 
-## Warning 
-This applications has only some minimal functions and is still in beta but you can try it anyway. 
-
-## Browser support
-The application should work in new versions of **Firefox** and **Google Chrome**. Other browser are not tested.
-
-## Support
-If you come across any bugs in scrumboard don't hesitate to tell me: [Create an Issue](https://github.com/chefe/scrum-board/issues/new)
-
-## License
-[See license file.](https://github.com/chefe/scrum-board/blob/master/LICENSE)
-
-## Setup
-1. Install a webserver and a mysql server
-2. Create the database *scrumboard* and set it up with the given sql script
-3. copy all file to the webroot of your webserver
-4. Have fun!
-
-## Credits
-* [SlimFramework](http://www.slimframework.com/) which is a really nice php framework to create restful apis
-* [JasnyBootstrap](http://jasny.github.io/bootstrap/) which is a clone of the well know Twitter-Bootstrap-Framework, but with some really cool extensions
-* [JQuery](http://jquery.com/) on which is a dependency from JasnyBootstrap and simplifys a lot of javascript work
-* [HandlebarJs](http://handlebarsjs.com/) which is a tiny javascript template engine 
-* [SammyJs](http://sammyjs.org/) which is a small javascript framework to create aplications with nice restful urls
+This project is deprecated, see [chefe/board](https://github.com/chefe/board) for a rewrite of this application.
